@@ -1,0 +1,36 @@
+{
+  "connectorType": "Excel / CSV",
+  "description": "File-based data source connector for Excel workbooks and CSV files",
+  "sources": [
+    {
+      "name": "SalesData",
+      "type": "Excel",
+      "path": "${DATA_FOLDER}/sales-data.xlsx",
+      "sheet": "Sheet1",
+      "hasHeaders": true,
+      "startRow": 1,
+      "columns": [
+        { "name": "Date", "type": "DateTime", "format": "yyyy-MM-dd" },
+        { "name": "Product", "type": "String" },
+        { "name": "Region", "type": "String" },
+        { "name": "Revenue", "type": "Decimal" },
+        { "name": "Units", "type": "Int64" }
+      ]
+    },
+    {
+      "name": "BudgetData",
+      "type": "CSV",
+      "path": "${DATA_FOLDER}/budget.csv",
+      "delimiter": ",",
+      "encoding": "UTF-8",
+      "hasHeaders": true,
+      "columns": [
+        { "name": "Department", "type": "String" },
+        { "name": "Category", "type": "String" },
+        { "name": "BudgetAmount", "type": "Decimal" },
+        { "name": "FiscalYear", "type": "Int64" },
+        { "name": "Quarter", "type": "String" }
+      ]
+    }
+  ]
+}

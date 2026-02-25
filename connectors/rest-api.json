@@ -1,0 +1,59 @@
+{
+  "connectorType": "REST API (Web)",
+  "description": "REST API data source connector using Power Query Web.Contents",
+  "connection": {
+    "baseUrl": "${API_BASE_URL}",
+    "authenticationMode": "Bearer",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }
+  },
+  "endpoints": [
+    {
+      "name": "sales-data",
+      "path": "/api/v1/sales",
+      "method": "GET",
+      "queryParameters": {
+        "startDate": "${START_DATE}",
+        "endDate": "${END_DATE}",
+        "pageSize": 1000
+      },
+      "pagination": {
+        "type": "offset",
+        "pageParam": "offset",
+        "limitParam": "pageSize",
+        "totalField": "totalCount"
+      },
+      "responseMapping": {
+        "dataPath": "data.records",
+        "columns": [
+          { "source": "id", "name": "SalesID", "type": "Int64" },
+          { "source": "orderDate", "name": "OrderDate", "type": "DateTime" },
+          { "source": "customer.id", "name": "CustomerID", "type": "Int64" },
+          { "source": "totalAmount", "name": "TotalAmount", "type": "Decimal" },
+          { "source": "status", "name": "OrderStatus", "type": "String" }
+        ]
+      }
+    },
+    {
+      "name": "customers",
+      "path": "/api/v1/customers",
+      "method": "GET",
+      "responseMapping": {
+        "dataPath": "data",
+        "columns": [
+          { "source": "id", "name": "CustomerID", "type": "Int64" },
+          { "source": "name", "name": "CustomerName", "type": "String" },
+          { "source": "segment", "name": "Segment", "type": "String" },
+          { "source": "location.country", "name": "Country", "type": "String" }
+        ]
+      }
+    }
+  ],
+  "refreshSchedule": {
+    "frequency": "Daily",
+    "time": "06:00",
+    "timezone": "UTC"
+  }
+}

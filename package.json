@@ -1,0 +1,43 @@
+{
+  "name": "bi-design",
+  "version": "1.0.0",
+  "description": "Power BI Report Design Project - themes, connectors, Figma integration, and embedded analytics",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "deploy": "ts-node scripts/deploy.ts",
+    "export-figma": "ts-node scripts/export-figma-tokens.ts",
+    "generate-theme": "ts-node scripts/generate-theme.ts",
+    "validate-theme": "ts-node scripts/validate-theme.ts",
+    "lint": "eslint src/ scripts/ --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"scripts/**/*.ts\" \"themes/**/*.json\""
+  },
+  "dependencies": {
+    "powerbi-client": "^2.23.1",
+    "powerbi-models": "^1.13.0",
+    "powerbi-report-authoring": "^3.0.0",
+    "@azure/identity": "^4.2.0",
+    "@azure/msal-node": "^2.9.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "ajv": "^8.16.0"
+  },
+  "devDependencies": {
+    "@figma/rest-api-spec": "^0.18.0",
+    "@types/node": "^20.14.0",
+    "eslint": "^9.5.0",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  },
+  "keywords": [
+    "powerbi",
+    "report-design",
+    "figma",
+    "business-intelligence",
+    "data-visualization"
+  ],
+  "license": "MIT"
+}

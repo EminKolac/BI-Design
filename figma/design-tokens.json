@@ -1,0 +1,98 @@
+{
+  "$description": "Design tokens exported from Figma for Power BI report consistency",
+  "colors": {
+    "primary": {
+      "50": "#EFF6FF",
+      "100": "#DBEAFE",
+      "200": "#BFDBFE",
+      "300": "#93C5FD",
+      "400": "#60A5FA",
+      "500": "#3B82F6",
+      "600": "#2563EB",
+      "700": "#1D4ED8",
+      "800": "#1E40AF",
+      "900": "#1E3A8A"
+    },
+    "secondary": {
+      "50": "#F5F3FF",
+      "100": "#EDE9FE",
+      "200": "#DDD6FE",
+      "300": "#C4B5FD",
+      "400": "#A78BFA",
+      "500": "#8B5CF6",
+      "600": "#7C3AED",
+      "700": "#6D28D9",
+      "800": "#5B21B6",
+      "900": "#4C1D95"
+    },
+    "success": { "default": "#059669", "light": "#34D399", "dark": "#047857" },
+    "warning": { "default": "#D97706", "light": "#FBBF24", "dark": "#B45309" },
+    "error": { "default": "#DC2626", "light": "#F87171", "dark": "#B91C1C" },
+    "neutral": {
+      "50": "#F8FAFC",
+      "100": "#F1F5F9",
+      "200": "#E2E8F0",
+      "300": "#CBD5E1",
+      "400": "#94A3B8",
+      "500": "#64748B",
+      "600": "#475569",
+      "700": "#334155",
+      "800": "#1E293B",
+      "900": "#0F172A"
+    },
+    "background": {
+      "page": "#F8FAFC",
+      "card": "#FFFFFF",
+      "darkPage": "#0F172A",
+      "darkCard": "#1E293B"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Segoe UI",
+      "secondary": "Segoe UI Semibold",
+      "mono": "Consolas"
+    },
+    "fontSize": {
+      "xs": 8,
+      "sm": 10,
+      "base": 12,
+      "lg": 14,
+      "xl": 18,
+      "2xl": 24,
+      "3xl": 28,
+      "4xl": 36
+    },
+    "fontWeight": {
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 48
+  },
+  "borderRadius": {
+    "none": 0,
+    "sm": 4,
+    "md": 8,
+    "lg": 12,
+    "full": 9999
+  },
+  "shadows": {
+    "sm": { "offset": 1, "blur": 2, "opacity": 0.05 },
+    "md": { "offset": 2, "blur": 4, "opacity": 0.1 },
+    "lg": { "offset": 4, "blur": 8, "opacity": 0.15 }
+  },
+  "dataVisualization": {
+    "sequential": ["#DBEAFE", "#93C5FD", "#3B82F6", "#1D4ED8", "#1E3A8A"],
+    "diverging": ["#DC2626", "#F87171", "#FDE68A", "#34D399", "#059669"],
+    "categorical": ["#2563EB", "#7C3AED", "#059669", "#D97706", "#DC2626", "#0891B2", "#4F46E5", "#15803D"]
+  }
+}

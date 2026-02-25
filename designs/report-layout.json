@@ -1,0 +1,228 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.137.json",
+  "reportLayout": {
+    "name": "BI-Design Report",
+    "description": "Multi-page Power BI report layout specification",
+    "pageSize": {
+      "type": "Custom",
+      "width": 1280,
+      "height": 720
+    },
+    "pages": [
+      {
+        "name": "Executive Summary",
+        "displayName": "Executive Summary",
+        "order": 0,
+        "layout": {
+          "sections": [
+            {
+              "name": "header",
+              "bounds": { "x": 0, "y": 0, "width": 1280, "height": 60 },
+              "visuals": [
+                {
+                  "type": "textbox",
+                  "content": "Executive Dashboard",
+                  "bounds": { "x": 20, "y": 10, "width": 400, "height": 40 }
+                },
+                {
+                  "type": "slicer",
+                  "field": "Date[Year]",
+                  "bounds": { "x": 900, "y": 10, "width": 360, "height": 40 }
+                }
+              ]
+            },
+            {
+              "name": "kpi-row",
+              "bounds": { "x": 0, "y": 70, "width": 1280, "height": 120 },
+              "visuals": [
+                {
+                  "type": "card",
+                  "field": "Sales[Total Revenue]",
+                  "bounds": { "x": 20, "y": 0, "width": 295, "height": 110 }
+                },
+                {
+                  "type": "card",
+                  "field": "Sales[Gross Profit]",
+                  "bounds": { "x": 335, "y": 0, "width": 295, "height": 110 }
+                },
+                {
+                  "type": "card",
+                  "field": "Sales[Order Count]",
+                  "bounds": { "x": 650, "y": 0, "width": 295, "height": 110 }
+                },
+                {
+                  "type": "card",
+                  "field": "Customers[Active Count]",
+                  "bounds": { "x": 965, "y": 0, "width": 295, "height": 110 }
+                }
+              ]
+            },
+            {
+              "name": "charts-row",
+              "bounds": { "x": 0, "y": 200, "width": 1280, "height": 280 },
+              "visuals": [
+                {
+                  "type": "lineChart",
+                  "title": "Revenue Trend",
+                  "axis": { "x": "Date[Month]", "y": "Sales[Total Revenue]" },
+                  "bounds": { "x": 20, "y": 0, "width": 610, "height": 270 }
+                },
+                {
+                  "type": "clusteredBarChart",
+                  "title": "Revenue by Region",
+                  "axis": { "x": "Geography[Region]", "y": "Sales[Total Revenue]" },
+                  "bounds": { "x": 650, "y": 0, "width": 610, "height": 270 }
+                }
+              ]
+            },
+            {
+              "name": "bottom-row",
+              "bounds": { "x": 0, "y": 490, "width": 1280, "height": 220 },
+              "visuals": [
+                {
+                  "type": "donutChart",
+                  "title": "Sales by Category",
+                  "fields": { "legend": "Products[Category]", "values": "Sales[Total Revenue]" },
+                  "bounds": { "x": 20, "y": 0, "width": 400, "height": 210 }
+                },
+                {
+                  "type": "table",
+                  "title": "Top Products",
+                  "columns": ["Products[Name]", "Sales[Total Revenue]", "Sales[Units Sold]", "Sales[Profit Margin]"],
+                  "bounds": { "x": 440, "y": 0, "width": 820, "height": 210 }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "Sales Analysis",
+        "displayName": "Sales Analysis",
+        "order": 1,
+        "layout": {
+          "sections": [
+            {
+              "name": "filters",
+              "bounds": { "x": 0, "y": 0, "width": 1280, "height": 60 },
+              "visuals": [
+                {
+                  "type": "slicer",
+                  "field": "Date[Year-Quarter]",
+                  "bounds": { "x": 20, "y": 10, "width": 250, "height": 40 }
+                },
+                {
+                  "type": "slicer",
+                  "field": "Products[Category]",
+                  "bounds": { "x": 290, "y": 10, "width": 250, "height": 40 }
+                },
+                {
+                  "type": "slicer",
+                  "field": "Geography[Region]",
+                  "bounds": { "x": 560, "y": 10, "width": 250, "height": 40 }
+                }
+              ]
+            },
+            {
+              "name": "main-charts",
+              "bounds": { "x": 0, "y": 70, "width": 1280, "height": 320 },
+              "visuals": [
+                {
+                  "type": "areaChart",
+                  "title": "Sales Over Time",
+                  "axis": { "x": "Date[Date]", "y": "Sales[Total Revenue]", "legend": "Products[Category]" },
+                  "bounds": { "x": 20, "y": 0, "width": 820, "height": 310 }
+                },
+                {
+                  "type": "treemap",
+                  "title": "Revenue Distribution",
+                  "fields": { "group": "Products[Category]", "details": "Products[SubCategory]", "values": "Sales[Total Revenue]" },
+                  "bounds": { "x": 860, "y": 0, "width": 400, "height": 310 }
+                }
+              ]
+            },
+            {
+              "name": "detail-section",
+              "bounds": { "x": 0, "y": 400, "width": 1280, "height": 310 },
+              "visuals": [
+                {
+                  "type": "matrix",
+                  "title": "Sales Breakdown",
+                  "rows": ["Geography[Region]", "Geography[Country]"],
+                  "columns": ["Date[Quarter]"],
+                  "values": ["Sales[Total Revenue]", "Sales[Profit Margin]"],
+                  "bounds": { "x": 20, "y": 0, "width": 1240, "height": 300 }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "Customer Insights",
+        "displayName": "Customer Insights",
+        "order": 2,
+        "layout": {
+          "sections": [
+            {
+              "name": "kpis",
+              "bounds": { "x": 0, "y": 0, "width": 1280, "height": 120 },
+              "visuals": [
+                {
+                  "type": "card",
+                  "field": "Customers[Total Customers]",
+                  "bounds": { "x": 20, "y": 10, "width": 295, "height": 100 }
+                },
+                {
+                  "type": "card",
+                  "field": "Customers[New Customers]",
+                  "bounds": { "x": 335, "y": 10, "width": 295, "height": 100 }
+                },
+                {
+                  "type": "card",
+                  "field": "Customers[Retention Rate]",
+                  "bounds": { "x": 650, "y": 10, "width": 295, "height": 100 }
+                },
+                {
+                  "type": "card",
+                  "field": "Customers[Avg Lifetime Value]",
+                  "bounds": { "x": 965, "y": 10, "width": 295, "height": 100 }
+                }
+              ]
+            },
+            {
+              "name": "customer-charts",
+              "bounds": { "x": 0, "y": 130, "width": 1280, "height": 560 },
+              "visuals": [
+                {
+                  "type": "scatterChart",
+                  "title": "Customer Segmentation",
+                  "axis": { "x": "Customers[Total Spend]", "y": "Customers[Purchase Frequency]", "size": "Customers[Avg Order Value]" },
+                  "bounds": { "x": 20, "y": 0, "width": 610, "height": 270 }
+                },
+                {
+                  "type": "stackedBarChart",
+                  "title": "Customers by Segment",
+                  "axis": { "x": "Customers[Segment]", "y": "Customers[Count]", "legend": "Date[Year]" },
+                  "bounds": { "x": 650, "y": 0, "width": 610, "height": 270 }
+                },
+                {
+                  "type": "lineChart",
+                  "title": "Customer Acquisition Trend",
+                  "axis": { "x": "Date[Month]", "y": "Customers[New Customers]" },
+                  "bounds": { "x": 20, "y": 280, "width": 610, "height": 270 }
+                },
+                {
+                  "type": "filledMap",
+                  "title": "Customer Distribution",
+                  "fields": { "location": "Geography[Country]", "values": "Customers[Count]" },
+                  "bounds": { "x": 650, "y": 280, "width": 610, "height": 270 }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

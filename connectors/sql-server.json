@@ -1,0 +1,89 @@
+{
+  "connectorType": "SQL Server",
+  "description": "SQL Server data source connector configuration",
+  "connection": {
+    "server": "${SQL_SERVER_HOST}",
+    "database": "${SQL_DATABASE_NAME}",
+    "authenticationMode": "Windows",
+    "encryptConnection": true,
+    "trustServerCertificate": false
+  },
+  "tables": [
+    {
+      "schema": "dbo",
+      "name": "FactSales",
+      "alias": "Sales",
+      "columns": [
+        { "name": "SalesID", "type": "Int64", "role": "key" },
+        { "name": "OrderDate", "type": "DateTime", "role": "date" },
+        { "name": "CustomerID", "type": "Int64", "role": "foreignKey" },
+        { "name": "ProductID", "type": "Int64", "role": "foreignKey" },
+        { "name": "Quantity", "type": "Int64", "role": "measure" },
+        { "name": "UnitPrice", "type": "Decimal", "role": "measure" },
+        { "name": "TotalAmount", "type": "Decimal", "role": "measure" },
+        { "name": "Discount", "type": "Decimal", "role": "measure" },
+        { "name": "Profit", "type": "Decimal", "role": "measure" }
+      ]
+    },
+    {
+      "schema": "dbo",
+      "name": "DimCustomer",
+      "alias": "Customers",
+      "columns": [
+        { "name": "CustomerID", "type": "Int64", "role": "key" },
+        { "name": "CustomerName", "type": "String", "role": "attribute" },
+        { "name": "Email", "type": "String", "role": "attribute" },
+        { "name": "Segment", "type": "String", "role": "category" },
+        { "name": "City", "type": "String", "role": "geography" },
+        { "name": "Country", "type": "String", "role": "geography" },
+        { "name": "Region", "type": "String", "role": "geography" }
+      ]
+    },
+    {
+      "schema": "dbo",
+      "name": "DimProduct",
+      "alias": "Products",
+      "columns": [
+        { "name": "ProductID", "type": "Int64", "role": "key" },
+        { "name": "ProductName", "type": "String", "role": "attribute" },
+        { "name": "Category", "type": "String", "role": "category" },
+        { "name": "SubCategory", "type": "String", "role": "category" },
+        { "name": "UnitCost", "type": "Decimal", "role": "measure" }
+      ]
+    },
+    {
+      "schema": "dbo",
+      "name": "DimDate",
+      "alias": "Date",
+      "columns": [
+        { "name": "DateKey", "type": "Int64", "role": "key" },
+        { "name": "Date", "type": "DateTime", "role": "date" },
+        { "name": "Year", "type": "Int64", "role": "hierarchy" },
+        { "name": "Quarter", "type": "String", "role": "hierarchy" },
+        { "name": "Month", "type": "String", "role": "hierarchy" },
+        { "name": "MonthNumber", "type": "Int64", "role": "sort" },
+        { "name": "WeekDay", "type": "String", "role": "hierarchy" }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": { "table": "Sales", "column": "CustomerID" },
+      "to": { "table": "Customers", "column": "CustomerID" },
+      "cardinality": "ManyToOne",
+      "crossFilterDirection": "Single"
+    },
+    {
+      "from": { "table": "Sales", "column": "ProductID" },
+      "to": { "table": "Products", "column": "ProductID" },
+      "cardinality": "ManyToOne",
+      "crossFilterDirection": "Single"
+    },
+    {
+      "from": { "table": "Sales", "column": "OrderDate" },
+      "to": { "table": "Date", "column": "Date" },
+      "cardinality": "ManyToOne",
+      "crossFilterDirection": "Single"
+    }
+  ]
+}

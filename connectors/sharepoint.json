@@ -1,0 +1,30 @@
+{
+  "connectorType": "SharePoint Online",
+  "description": "SharePoint Online list and document library connector",
+  "connection": {
+    "siteUrl": "${SHAREPOINT_SITE_URL}",
+    "authenticationMode": "OrganizationalAccount"
+  },
+  "sources": [
+    {
+      "name": "ProjectTracker",
+      "type": "SharePointList",
+      "listName": "Project Tracker",
+      "columns": [
+        { "name": "Title", "type": "String" },
+        { "name": "Status", "type": "String" },
+        { "name": "AssignedTo", "type": "String" },
+        { "name": "DueDate", "type": "DateTime" },
+        { "name": "Priority", "type": "String" },
+        { "name": "PercentComplete", "type": "Decimal" }
+      ]
+    },
+    {
+      "name": "MonthlyReports",
+      "type": "SharePointFolder",
+      "folderPath": "/Shared Documents/Reports",
+      "filePattern": "*.xlsx",
+      "combineFiles": true
+    }
+  ]
+}
