@@ -1,0 +1,107 @@
+{
+  "connectorType": "Investment Fund Data Model",
+  "description": "Star schema for investment fund portfolio reporting (NBIM-style)",
+  "tables": [
+    {
+      "name": "Holdings",
+      "description": "Fact table: individual investment holdings per company per period",
+      "columns": [
+        { "name": "HoldingID", "type": "Int64", "role": "key" },
+        { "name": "CompanyID", "type": "Int64", "role": "foreignKey" },
+        { "name": "CountryID", "type": "Int64", "role": "foreignKey" },
+        { "name": "AssetClassID", "type": "Int64", "role": "foreignKey" },
+        { "name": "SectorID", "type": "Int64", "role": "foreignKey" },
+        { "name": "DateKey", "type": "Int64", "role": "foreignKey" },
+        { "name": "CompanyName", "type": "String", "role": "attribute" },
+        { "name": "Year", "type": "Int64", "role": "filter" },
+        { "name": "MarketValueNOK", "type": "Decimal", "role": "measure", "description": "Market value in Norwegian Kroner" },
+        { "name": "MarketValueUSD", "type": "Decimal", "role": "measure", "description": "Market value in US Dollars" },
+        { "name": "VotingSharePct", "type": "Decimal", "role": "measure", "description": "Voting shares percentage" },
+        { "name": "OwnershipPct", "type": "Decimal", "role": "measure", "description": "Ownership percentage" },
+        { "name": "SharesHeld", "type": "Int64", "role": "measure" },
+        { "name": "CostBasis", "type": "Decimal", "role": "measure" }
+      ]
+    },
+    {
+      "name": "Geography",
+      "description": "Dimension: countries and regions",
+      "columns": [
+        { "name": "CountryID", "type": "Int64", "role": "key" },
+        { "name": "Country", "type": "String", "role": "attribute" },
+        { "name": "Region", "type": "String", "role": "category", "description": "e.g. North America, Europe, Asia" },
+        { "name": "SubRegion", "type": "String", "role": "category", "description": "e.g. Nordics, Western Europe" },
+        { "name": "ISOCode", "type": "String", "role": "attribute" },
+        { "name": "Latitude", "type": "Decimal", "role": "geography" },
+        { "name": "Longitude", "type": "Decimal", "role": "geography" }
+      ]
+    },
+    {
+      "name": "AssetClass",
+      "description": "Dimension: asset class types",
+      "columns": [
+        { "name": "AssetClassID", "type": "Int64", "role": "key" },
+        { "name": "Name", "type": "String", "role": "attribute", "description": "Equities, Fixed Income, Unlisted Real Estate, Renewable Energy Infrastructure" },
+        { "name": "SubClass", "type": "String", "role": "category" },
+        { "name": "SortOrder", "type": "Int64", "role": "sort" }
+      ]
+    },
+    {
+      "name": "Sector",
+      "description": "Dimension: industry sectors (GICS-based)",
+      "columns": [
+        { "name": "SectorID", "type": "Int64", "role": "key" },
+        { "name": "Name", "type": "String", "role": "attribute", "description": "e.g. Technology, Financials, Health Care" },
+        { "name": "SubSector", "type": "String", "role": "category" },
+        { "name": "GICSCode", "type": "String", "role": "attribute" }
+      ]
+    },
+    {
+      "name": "Date",
+      "description": "Dimension: date/time periods",
+      "columns": [
+        { "name": "DateKey", "type": "Int64", "role": "key" },
+        { "name": "Date", "type": "DateTime", "role": "date" },
+        { "name": "Year", "type": "Int64", "role": "hierarchy" },
+        { "name": "Quarter", "type": "String", "role": "hierarchy" },
+        { "name": "Month", "type": "String", "role": "hierarchy" },
+        { "name": "YearQuarter", "type": "String", "role": "hierarchy", "description": "e.g. 2024-Q4" }
+      ]
+    },
+    {
+      "name": "Returns",
+      "description": "Fact table: fund return data by period and asset class",
+      "columns": [
+        { "name": "ReturnID", "type": "Int64", "role": "key" },
+        { "name": "DateKey", "type": "Int64", "role": "foreignKey" },
+        { "name": "AssetClassID", "type": "Int64", "role": "foreignKey" },
+        { "name": "AnnualReturnPct", "type": "Decimal", "role": "measure" },
+        { "name": "CumulativeReturnPct", "type": "Decimal", "role": "measure" },
+        { "name": "ReturnValueNOK", "type": "Decimal", "role": "measure" },
+        { "name": "BenchmarkReturnPct", "type": "Decimal", "role": "measure" },
+        { "name": "RelativeReturnPct", "type": "Decimal", "role": "measure" }
+      ]
+    },
+    {
+      "name": "Allocation",
+      "description": "Fact table: asset allocation breakdown",
+      "columns": [
+        { "name": "AllocationID", "type": "Int64", "role": "key" },
+        { "name": "DateKey", "type": "Int64", "role": "foreignKey" },
+        { "name": "AssetClassID", "type": "Int64", "role": "foreignKey" },
+        { "name": "MarketValue", "type": "Decimal", "role": "measure" },
+        { "name": "AllocationPct", "type": "Decimal", "role": "measure" },
+        { "name": "TargetAllocationPct", "type": "Decimal", "role": "measure" }
+      ]
+    }
+  ],
+  "relationships": [
+    { "from": { "table": "Holdings", "column": "CountryID" }, "to": { "table": "Geography", "column": "CountryID" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Holdings", "column": "AssetClassID" }, "to": { "table": "AssetClass", "column": "AssetClassID" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Holdings", "column": "SectorID" }, "to": { "table": "Sector", "column": "SectorID" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Holdings", "column": "DateKey" }, "to": { "table": "Date", "column": "DateKey" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Returns", "column": "DateKey" }, "to": { "table": "Date", "column": "DateKey" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Returns", "column": "AssetClassID" }, "to": { "table": "AssetClass", "column": "AssetClassID" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Allocation", "column": "DateKey" }, "to": { "table": "Date", "column": "DateKey" }, "cardinality": "ManyToOne" },
+    { "from": { "table": "Allocation", "column": "AssetClassID" }, "to": { "table": "AssetClass", "column": "AssetClassID" }, "cardinality": "ManyToOne" }
+  ]
+}

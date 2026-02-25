@@ -1,0 +1,168 @@
+{
+  "$description": "NBIM-style design tokens for investment fund Power BI report",
+  "brand": {
+    "name": "Investment Fund Report - NBIM Style",
+    "inspiration": "Norges Bank Investment Management (nbim.no)"
+  },
+  "colors": {
+    "primary": {
+      "900": "#001033",
+      "800": "#001845",
+      "700": "#00205B",
+      "600": "#003380",
+      "500": "#0056B3",
+      "400": "#2E8BC0",
+      "300": "#5AB4E5",
+      "200": "#8ED1F0",
+      "100": "#B8E2F8",
+      "50": "#E3F4FD"
+    },
+    "accent": {
+      "gold": "#C4A35A",
+      "goldLight": "#E8D5A3",
+      "goldDark": "#9B7F3C"
+    },
+    "semantic": {
+      "positive": "#4CAF50",
+      "positiveLight": "#81C784",
+      "negative": "#E74C3C",
+      "negativeLight": "#EF9A9A",
+      "neutral": "#7A8B99"
+    },
+    "background": {
+      "page": "#000000",
+      "card": "#0A0A0A",
+      "elevated": "#111111",
+      "input": "#0D0D1A",
+      "hover": "#0A0A1E"
+    },
+    "border": {
+      "default": "#1A1A2E",
+      "subtle": "#0D0D1A",
+      "strong": "#2A2A3E"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A3B5C4",
+      "muted": "#7A8B99",
+      "disabled": "#555555",
+      "inverse": "#000000"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": "Segoe UI Light",
+      "primary": "Segoe UI",
+      "primaryBold": "Segoe UI Semibold",
+      "mono": "Consolas"
+    },
+    "fontSize": {
+      "hero": 48,
+      "display": 36,
+      "h1": 28,
+      "h2": 20,
+      "h3": 16,
+      "h4": 14,
+      "body": 12,
+      "bodySmall": 11,
+      "caption": 10,
+      "micro": 9
+    },
+    "fontWeight": {
+      "light": 300,
+      "regular": 400,
+      "semibold": 600,
+      "bold": 700
+    },
+    "lineHeight": {
+      "tight": 1.2,
+      "normal": 1.5,
+      "relaxed": 1.8
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 48,
+    "3xl": 60,
+    "pageMargin": 60
+  },
+  "borderRadius": {
+    "none": 0,
+    "sm": 2,
+    "md": 4,
+    "lg": 8
+  },
+  "shadows": {
+    "none": "none",
+    "subtle": { "offset": 0, "blur": 1, "color": "rgba(0,0,0,0.3)" }
+  },
+  "dataVisualization": {
+    "sequential": ["#001033", "#00205B", "#0056B3", "#2E8BC0", "#5AB4E5", "#8ED1F0", "#B8E2F8"],
+    "categorical": ["#00205B", "#0056B3", "#2E8BC0", "#5AB4E5", "#8ED1F0", "#B8E2F8", "#C4A35A", "#E8D5A3", "#7A8B99", "#A3B5C4"],
+    "diverging": ["#E74C3C", "#EF9A9A", "#555555", "#5AB4E5", "#00205B"],
+    "positiveNegative": ["#4CAF50", "#E74C3C"],
+    "heatmap": {
+      "min": "#0A0A2E",
+      "mid": "#00205B",
+      "max": "#5AB4E5"
+    }
+  },
+  "components": {
+    "filterDropdown": {
+      "background": "#111111",
+      "border": "#1A1A2E",
+      "fontColor": "#FFFFFF",
+      "placeholderColor": "#555555",
+      "hoverBackground": "#1A1A2E",
+      "selectedBackground": "#00205B",
+      "fontSize": 11,
+      "height": 40,
+      "borderRadius": 2
+    },
+    "dataTable": {
+      "headerBackground": "#000000",
+      "headerFont": "Segoe UI",
+      "headerFontSize": 10,
+      "headerFontColor": "#7A8B99",
+      "headerBorderBottom": "#1A1A2E",
+      "rowBackground": "#000000",
+      "rowAlternateBackground": "#050505",
+      "rowFontColor": "#FFFFFF",
+      "rowFontSize": 11,
+      "rowBorderBottom": "#0D0D1A",
+      "rowHoverBackground": "#0A0A1E",
+      "rowHeight": 44,
+      "pagination": {
+        "fontColor": "#7A8B99",
+        "activeFontColor": "#FFFFFF",
+        "rowsPerPage": 25
+      }
+    },
+    "kpiCard": {
+      "background": "transparent",
+      "valueFont": "Segoe UI Light",
+      "valueFontSize": 36,
+      "valueColor": "#FFFFFF",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 10,
+      "labelColor": "#7A8B99",
+      "labelTextTransform": "uppercase",
+      "letterSpacing": "0.5px"
+    },
+    "chart": {
+      "background": "transparent",
+      "gridlineColor": "#1A1A2E",
+      "axisLabelColor": "#7A8B99",
+      "axisLabelFontSize": 9,
+      "legendColor": "#A3B5C4",
+      "legendFontSize": 9,
+      "tooltipBackground": "#111111",
+      "tooltipBorder": "#1A1A2E",
+      "tooltipFontColor": "#FFFFFF"
+    }
+  }
+}
