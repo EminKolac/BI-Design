@@ -9,6 +9,7 @@
     "dev": "ts-node src/index.ts",
     "deploy": "ts-node scripts/deploy.ts",
     "export-figma": "ts-node scripts/export-figma-tokens.ts",
+    "push-figma": "ts-node scripts/push-to-figma.ts",
     "generate-theme": "ts-node scripts/generate-theme.ts",
     "validate-theme": "ts-node scripts/validate-theme.ts",
     "lint": "eslint src/ scripts/ --ext .ts",
