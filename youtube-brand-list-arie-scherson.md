@@ -35,6 +35,43 @@
 - **Category:** Consumer Electronics / Minimalist Tech
 - **Description:** DTC brand offering a minimalist phone designed to be used as little as possible. Featured on Arie's Akemi Lab blog as a case study in having a clear, compelling product proposition that directly addresses consumer desires for simplicity.
 
+### 6. The Oodie
+- **Link:** [theoodie.com](https://www.theoodie.com/)
+- **Category:** Fashion / Comfort Apparel (Blanket Hoodies)
+- **Description:** Nine-figure DTC brand ($500M+ revenue, 8.1M units sold) founded by Davie Fogarty. Arie analyzed their creator community strategy — scaling to $150K/month at 5X ROI by recruiting 100 creator-affiliates per month, using Discord for community management, and running monthly content challenges.
+
+### 7. Wavy Talk (Thermal Brush)
+- **Link:** Available on TikTok Shop
+- **Category:** Beauty / Hair Tools
+- **Description:** Featured in Arie's "Top 5 TikTok shop products selling over $1,000,000/mo" — the Wavy Talk Thermal Brush generated over $3M in sales through simple, authentic creator videos. Used as an example of viral product-market fit on TikTok Shop.
+
+### 8. Beachwaver (Beach Waver B1)
+- **Link:** [beachwaver.com](https://www.beachwaver.com/)
+- **Category:** Beauty / Hair Styling Tools
+- **Description:** Also featured in his TikTok Shop products analysis. The Beach Waver B1 achieved eight figures in six months despite seasonal sales dips. Arie highlighted it as an example of a legacy brand successfully transitioning to TikTok Shop.
+
+### 9. Teemo Beauty
+- **Link:** [teemobeauty.com](https://www.teemobeauty.com/)
+- **Category:** Beauty / Beauty Gadgets
+- **Description:** Arie analyzed this as a multi-million dollar per month Shopify niche store specializing in beauty gadgets — used as an example of his "genius niche store" format.
+
+---
+
+## Brands Referenced in DTC Ecosystem Discussions
+
+Brands Arie has referenced on LinkedIn/X when discussing what top DTC operators are doing right, sharing insights from their leaders, or analyzing marketing strategies:
+
+| Brand | Website | Category | Operator Referenced |
+|-------|---------|----------|---------------------|
+| **Ridge** | [ridge.com](https://www.ridge.com/) | EDC Accessories / Wallets | Sean Frank (founder) |
+| **Simple Modern** | [simplemodern.com](https://www.simplemodern.com/) | Drinkware / Insulated Products | Mike Beckham (founder) |
+| **Jones Road Beauty** | [jonesroadbeauty.com](https://www.jonesroadbeauty.com/) | Beauty / Cosmetics | Cody Plofker (CMO) |
+| **HexClad** | [hexclad.com](https://www.hexclad.com/) | Cookware | Connor Rolain (VP of Growth) |
+| **MUD\WTR** | [mudwtr.com](https://www.mudwtr.com/) | Health / Coffee Alternative | — |
+| **True Classic** | [trueclassic.com](https://www.trueclassic.com/) | Men's Apparel / Basics | — |
+| **Kitsch** | [mykitsch.com](https://www.mykitsch.com/) | Hair Accessories / Beauty | — |
+| **Tushy** | [hellotushy.com](https://www.hellotushy.com/) | Bathroom / Bidet Attachments | — |
+
 ---
 
 ## Arie Scherson's Own Portfolio (Blue Dot Holdings)
@@ -62,8 +99,15 @@ Arie Scherson regularly does deep-dive analyses of high-revenue DTC Shopify stor
 - "New $6,500,000/month TikTok Shop brand"
 - "Top 5 TikTok shop products selling over $1,000,000/mo"
 - "A Booming $26.4 Billion Ecommerce Niche Trend"
+- "A Genius $3,200,000/Month Shopify Niche Store"
+- "A Genius $3,000,000/Month Shopify Niche Store"
+- "A Genius $950,000/Month Shopify Niche Store"
+- "A Brilliant $2,140,000/Month Shopify Niche Store"
+- "A Genius $900,000,000 Shopify Niche Store Trend"
+- "A Brilliant $880 Million Ecommerce Niche Store"
+- "A Genius $203,100,000/Month Shopify Niche Store"
 
-The specific DTC brand names are revealed within the video content itself.
+The specific DTC brand names are revealed within the video content itself. With 420+ videos on his channel, these represent only a sample of his store analysis content.
 
 ---
 
@@ -80,7 +124,7 @@ The specific DTC brand names are revealed within the video content itself.
 
 Arie Scherson's content style focuses on **teaching ecommerce strategy** using real store case studies, but he often keeps specific brand names within the video content rather than in titles or social media posts. To get the full list of DTC brands he covers, watching the actual videos on [his YouTube channel](https://www.youtube.com/@ArieS1) is recommended.
 
-Most of his publicly searchable brand mentions are for **Goli** and **Lectric eBikes** — the rest are typically embedded within video analyses.
+Most of his publicly searchable brand mentions are for **Goli**, **Lectric eBikes**, and **The Oodie** — the rest are typically embedded within video analyses or referenced in LinkedIn/X discussions.
 
 ---
 
