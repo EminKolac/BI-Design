@@ -1,8 +1,10 @@
 # DTC Brands Discussed by Arie Scherson (@ArieS1)
 
 **YouTube Channel:** [youtube.com/@ArieS1](https://www.youtube.com/@ArieS1)
-**Subscribers:** ~154K | **Videos:** 1,800+ | **Total Views:** 4.7M+
+**Subscribers:** ~127K | **Videos:** 1,800+ | **Total Views:** 4.7M+
 **Niche:** E-commerce, Dropshipping, Shopify, DTC Brand Analysis
+**Agency:** [Akemi Lab](https://akemilab.com/) (Media buying agency for Meta & TikTok ads)
+**Holding Company:** Blue Dot Holdings (6 businesses, $10M+ total revenue)
 
 ---
 
@@ -35,9 +37,23 @@
 
 ---
 
+## Arie Scherson's Own Portfolio (Blue Dot Holdings)
+
+Arie built Blue Dot Holdings — a constellation of six e-commerce businesses inspired by Andrew Wilkinson's holding company model. His portfolio includes:
+
+| Company | Category | Description |
+|---------|----------|-------------|
+| **Akemi Lab** | Marketing Agency | Performance marketing agency specializing in Meta ads, TikTok ads, and Google ads for 7- and 8-figure ecommerce brands |
+| **Smart Reply AI** | SaaS / Software | AI-powered comment moderation and engagement tool for Facebook ads |
+| **Supplement Brand** (unnamed) | Health & Supplements | Amazon + Shopify supplement brand (kept private) |
+| **Nine-Figure TikTok Shop Brand** (equity stake) | TikTok Commerce | Equity position in a major TikTok Shop brand doing nine figures |
+| **2 Incubated E-commerce Stores** (unnamed) | DTC / Branded Dropshipping | Two branded dropshipping stores built using lean MVP methodology (kept private) |
+
+---
+
 ## DTC Brands Analyzed in Videos (Names Revealed Inside Videos Only)
 
-Arie Scherson regularly does deep-dive analyses of high-revenue DTC Shopify stores in his YouTube videos. However, he typically uses revenue figures in titles rather than brand names. Known video titles include:
+Arie Scherson regularly does deep-dive analyses of high-revenue DTC Shopify stores in his YouTube videos. He reverse-engineers seven- and eight-figure Shopify brands, mapping out creative angles, landing pages, and back-end email flows. However, he typically uses revenue figures in titles rather than brand names. Known video titles include:
 
 - "This $5.1M/Month Shopify Store Is Doing Everything Right"
 - "A Brilliant $20,000,000/Month Shopify Niche Store"
@@ -51,6 +67,15 @@ The specific DTC brand names are revealed within the video content itself.
 
 ---
 
+## Arie's Key Strategies & Insights
+
+- **Asset Amplification:** Take a best-performing Meta creative or UGC video and adapt it for AppLovin, TikTok, and YouTube Shorts — same creative DNA, different distribution
+- **Product > Marketing:** Some products sell like "hotcakes" regardless of ad quality; product selection matters more than marketing execution
+- **Tech Stack:** Shopify (primary platform), ChatGPT (content & automation), MidJourney (AI imagery), Meta Ads Manager, TikTok (organic + paid)
+- **Tariff Opportunity:** While others are fearful, disruption takes out big players with thin margins — creating openings for new brands
+
+---
+
 ## Note
 
 Arie Scherson's content style focuses on **teaching ecommerce strategy** using real store case studies, but he often keeps specific brand names within the video content rather than in titles or social media posts. To get the full list of DTC brands he covers, watching the actual videos on [his YouTube channel](https://www.youtube.com/@ArieS1) is recommended.
@@ -59,4 +84,4 @@ Most of his publicly searchable brand mentions are for **Goli** and **Lectric eB
 
 ---
 
-*Sources compiled from web research, February 2026.*
+*Sources compiled from web research, March 2026.*
