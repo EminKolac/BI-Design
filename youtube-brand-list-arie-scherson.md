@@ -8,69 +8,27 @@
 
 ---
 
-## Confirmed DTC Brands He Analyzes & Discusses
+## All DTC Brands Discussed by Arie Scherson
 
-### 1. Goli (Goli Nutrition)
-- **Link:** [goli.com](https://www.goli.com/)
-- **Category:** Health & Wellness (Apple Cider Vinegar Gummies)
-- **Description:** The #1 TikTok Shop brand in the US, generating $12M/month. Arie highlighted their reward incentive campaign for affiliates, noting they "pioneered incentive alignment on the platform." He uses Goli as a key case study for successful TikTok Shop strategy and scaling through creator incentives.
-
-### 2. Lectric eBikes
-- **Link:** [lectricebikes.com](https://lectricebikes.com/)
-- **Category:** Electric Bikes / Transportation
-- **Description:** DTC electric bike brand. Arie posted about "The Ryan Trahan effect: Lectric Ebikes" — analyzing how influencer marketing (Ryan Trahan's endorsement) drove massive brand awareness and sales for this direct-to-consumer e-bike company.
-
-### 3. Faherty Brand
-- **Link:** [fahertybrand.com](https://www.fahertybrand.com/)
-- **Category:** Sustainable Fashion / Apparel
-- **Description:** Family-run DTC clothing brand focused on sustainability. Featured on Arie's Akemi Lab blog as an example of a successful ecommerce store. He highlights how Faherty built a strong online presence by aligning brand values (sustainability) with consumer expectations.
-
-### 4. Business & Pleasure Co.
-- **Link:** [businessandpleasureco.com](https://www.businessandpleasureco.com/)
-- **Category:** Outdoor / Leisure Products
-- **Description:** DTC brand specializing in high-end leisure and beach products. Featured on Arie's Akemi Lab blog. He analyzes how they carved out a niche by combining aesthetics with practicality — blending quality products with a visually appealing e-commerce platform.
-
-### 5. The Light Phone
-- **Link:** [thelightphone.com](https://www.thelightphone.com/)
-- **Category:** Consumer Electronics / Minimalist Tech
-- **Description:** DTC brand offering a minimalist phone designed to be used as little as possible. Featured on Arie's Akemi Lab blog as a case study in having a clear, compelling product proposition that directly addresses consumer desires for simplicity.
-
-### 6. The Oodie
-- **Link:** [theoodie.com](https://www.theoodie.com/)
-- **Category:** Fashion / Comfort Apparel (Blanket Hoodies)
-- **Description:** Nine-figure DTC brand ($500M+ revenue, 8.1M units sold) founded by Davie Fogarty. Arie analyzed their creator community strategy — scaling to $150K/month at 5X ROI by recruiting 100 creator-affiliates per month, using Discord for community management, and running monthly content challenges.
-
-### 7. Wavy Talk (Thermal Brush)
-- **Link:** Available on TikTok Shop
-- **Category:** Beauty / Hair Tools
-- **Description:** Featured in Arie's "Top 5 TikTok shop products selling over $1,000,000/mo" — the Wavy Talk Thermal Brush generated over $3M in sales through simple, authentic creator videos. Used as an example of viral product-market fit on TikTok Shop.
-
-### 8. Beachwaver (Beach Waver B1)
-- **Link:** [beachwaver.com](https://www.beachwaver.com/)
-- **Category:** Beauty / Hair Styling Tools
-- **Description:** Also featured in his TikTok Shop products analysis. The Beach Waver B1 achieved eight figures in six months despite seasonal sales dips. Arie highlighted it as an example of a legacy brand successfully transitioning to TikTok Shop.
-
-### 9. Teemo Beauty
-- **Link:** [teemobeauty.com](https://www.teemobeauty.com/)
-- **Category:** Beauty / Beauty Gadgets
-- **Description:** Arie analyzed this as a multi-million dollar per month Shopify niche store specializing in beauty gadgets — used as an example of his "genius niche store" format.
-
----
-
-## Brands Referenced in DTC Ecosystem Discussions
-
-Brands Arie has referenced on LinkedIn/X when discussing what top DTC operators are doing right, sharing insights from their leaders, or analyzing marketing strategies:
-
-| Brand | Website | Category | Operator Referenced |
-|-------|---------|----------|---------------------|
-| **Ridge** | [ridge.com](https://www.ridge.com/) | EDC Accessories / Wallets | Sean Frank (founder) |
-| **Simple Modern** | [simplemodern.com](https://www.simplemodern.com/) | Drinkware / Insulated Products | Mike Beckham (founder) |
-| **Jones Road Beauty** | [jonesroadbeauty.com](https://www.jonesroadbeauty.com/) | Beauty / Cosmetics | Cody Plofker (CMO) |
-| **HexClad** | [hexclad.com](https://www.hexclad.com/) | Cookware | Connor Rolain (VP of Growth) |
-| **MUD\WTR** | [mudwtr.com](https://www.mudwtr.com/) | Health / Coffee Alternative | — |
-| **True Classic** | [trueclassic.com](https://www.trueclassic.com/) | Men's Apparel / Basics | — |
-| **Kitsch** | [mykitsch.com](https://www.mykitsch.com/) | Hair Accessories / Beauty | — |
-| **Tushy** | [hellotushy.com](https://www.hellotushy.com/) | Bathroom / Bidet Attachments | — |
+| # | Brand | Website | Category | Context | Description |
+|---|-------|---------|----------|---------|-------------|
+| 1 | **Goli (Goli Nutrition)** | [goli.com](https://www.goli.com/) | Health & Wellness | YouTube / TikTok / X | #1 TikTok Shop brand in US, $12M/month. Arie highlighted their affiliate reward incentive campaign — "pioneered incentive alignment on the platform." Key case study for TikTok Shop scaling. |
+| 2 | **Lectric eBikes** | [lectricebikes.com](https://lectricebikes.com/) | Electric Bikes / Transportation | LinkedIn / X | Arie analyzed "The Ryan Trahan effect" — how influencer marketing drove massive brand awareness and sales for this DTC e-bike company. |
+| 3 | **Faherty Brand** | [fahertybrand.com](https://www.fahertybrand.com/) | Sustainable Fashion / Apparel | Akemi Lab Blog | Family-run DTC clothing brand focused on sustainability. Featured as an example of aligning brand values with consumer expectations. |
+| 4 | **Business & Pleasure Co.** | [businessandpleasureco.com](https://www.businessandpleasureco.com/) | Outdoor / Leisure Products | Akemi Lab Blog | High-end leisure and beach products. Analyzed for combining aesthetics with practicality in a visually appealing e-commerce platform. |
+| 5 | **The Light Phone** | [thelightphone.com](https://www.thelightphone.com/) | Consumer Electronics / Minimalist Tech | Akemi Lab Blog | Minimalist phone designed to be used as little as possible. Case study in clear, compelling product proposition addressing consumer simplicity. |
+| 6 | **The Oodie** | [theoodie.com](https://www.theoodie.com/) | Fashion / Comfort Apparel (Blanket Hoodies) | YouTube / LinkedIn | Nine-figure brand ($500M+ revenue, 8.1M units sold) by Davie Fogarty. Arie analyzed their creator community — 100 affiliates/month, Discord management, $150K/month at 5X ROI. |
+| 7 | **Wavy Talk (Thermal Brush)** | TikTok Shop | Beauty / Hair Tools | TikTok / YouTube | Featured in "Top 5 TikTok shop products selling over $1,000,000/mo." $3M+ in sales through simple, authentic creator videos. Example of viral product-market fit on TikTok Shop. |
+| 8 | **Beachwaver (Beach Waver B1)** | [beachwaver.com](https://www.beachwaver.com/) | Beauty / Hair Styling Tools | TikTok / YouTube | Eight figures in six months despite seasonal dips. Legacy brand successfully transitioning to TikTok Shop. |
+| 9 | **Teemo Beauty** | [teemobeauty.com](https://www.teemobeauty.com/) | Beauty / Beauty Gadgets | YouTube / Instagram | Multi-million dollar/month Shopify niche store specializing in beauty gadgets — "genius niche store" format. |
+| 10 | **Ridge** | [ridge.com](https://www.ridge.com/) | EDC Accessories / Wallets | LinkedIn / X | Referenced discussing top DTC operators. Operator: Sean Frank (founder). |
+| 11 | **Simple Modern** | [simplemodern.com](https://www.simplemodern.com/) | Drinkware / Insulated Products | LinkedIn / X | Referenced discussing top DTC operators. Operator: Mike Beckham (founder). |
+| 12 | **Jones Road Beauty** | [jonesroadbeauty.com](https://www.jonesroadbeauty.com/) | Beauty / Cosmetics | LinkedIn / X | Referenced discussing top DTC operators. Operator: Cody Plofker (CMO). |
+| 13 | **HexClad** | [hexclad.com](https://www.hexclad.com/) | Cookware | LinkedIn / X | Referenced discussing top DTC operators. Operator: Connor Rolain (VP of Growth). |
+| 14 | **MUD\WTR** | [mudwtr.com](https://www.mudwtr.com/) | Health / Coffee Alternative | LinkedIn / X | Referenced in DTC ecosystem marketing strategy discussions. |
+| 15 | **True Classic** | [trueclassic.com](https://www.trueclassic.com/) | Men's Apparel / Basics | LinkedIn / X | Referenced in DTC ecosystem marketing strategy discussions. |
+| 16 | **Kitsch** | [mykitsch.com](https://www.mykitsch.com/) | Hair Accessories / Beauty | LinkedIn / X | Referenced in DTC ecosystem marketing strategy discussions. |
+| 17 | **Tushy** | [hellotushy.com](https://www.hellotushy.com/) | Bathroom / Bidet Attachments | LinkedIn / X | Referenced in DTC ecosystem marketing strategy discussions. |
 
 ---
 
