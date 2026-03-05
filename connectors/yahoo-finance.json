@@ -1,0 +1,64 @@
+{
+  "connectorType": "Python (yfinance)",
+  "description": "Yahoo Finance market data connector using ranaroussi/yfinance - downloads stock, ETF, mutual fund, options, and crypto data",
+  "repository": "https://github.com/ranaroussi/yfinance",
+  "package": "yfinance>=1.2.0",
+  "dataSources": [
+    {
+      "name": "stock-history",
+      "description": "Historical OHLCV price data for stocks, ETFs, and indices",
+      "method": "Ticker.history()",
+      "parameters": {
+        "tickers": "${TICKER_SYMBOLS}",
+        "period": "1y",
+        "interval": "1d"
+      },
+      "columns": [
+        { "name": "Date", "type": "DateTime" },
+        { "name": "Open", "type": "Decimal" },
+        { "name": "High", "type": "Decimal" },
+        { "name": "Low", "type": "Decimal" },
+        { "name": "Close", "type": "Decimal" },
+        { "name": "Volume", "type": "Int64" },
+        { "name": "Dividends", "type": "Decimal" },
+        { "name": "Stock Splits", "type": "Decimal" }
+      ]
+    },
+    {
+      "name": "company-info",
+      "description": "Company fundamentals, financials, and metadata",
+      "method": "Ticker.info",
+      "columns": [
+        { "name": "Symbol", "type": "String" },
+        { "name": "ShortName", "type": "String" },
+        { "name": "Sector", "type": "String" },
+        { "name": "Industry", "type": "String" },
+        { "name": "MarketCap", "type": "Int64" },
+        { "name": "TrailingPE", "type": "Decimal" },
+        { "name": "ForwardPE", "type": "Decimal" },
+        { "name": "DividendYield", "type": "Decimal" },
+        { "name": "52WeekHigh", "type": "Decimal" },
+        { "name": "52WeekLow", "type": "Decimal" }
+      ]
+    },
+    {
+      "name": "financials",
+      "description": "Quarterly and annual financial statements",
+      "methods": ["Ticker.financials", "Ticker.balance_sheet", "Ticker.cashflow"],
+      "columns": [
+        { "name": "Date", "type": "DateTime" },
+        { "name": "TotalRevenue", "type": "Int64" },
+        { "name": "NetIncome", "type": "Int64" },
+        { "name": "TotalAssets", "type": "Int64" },
+        { "name": "TotalDebt", "type": "Int64" },
+        { "name": "OperatingCashflow", "type": "Int64" }
+      ]
+    }
+  ],
+  "refreshSchedule": {
+    "frequency": "Daily",
+    "time": "18:00",
+    "timezone": "US/Eastern",
+    "note": "Run after market close (4:00 PM ET)"
+  }
+}
