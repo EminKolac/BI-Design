@@ -10,3 +10,10 @@ dist/
 .idea/
 coverage/
 .next/
+
+# Generated CSV outputs from fetch_tvf_powerbi.py
+investments.csv
+timeframes.csv
+daily_prices.csv
+daily_prices_usd.csv
+portfolio_meta.csv
