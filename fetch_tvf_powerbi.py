@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fetch_tvf_powerbi.py — Fetch TVF (Turkey Wealth Fund) portfolio data via yfinance
+fetch_tvf_powerbi.py — Fetch TVF (Turkey Wealth Fund) portfolio data via borsapy
 and output CSV files matching the NBIM Power BI data model.
 
 Outputs:
@@ -22,7 +22,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-import yfinance as yf
+import borsapy as bp
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -38,21 +38,16 @@ log = logging.getLogger(__name__)
 # Constants
 # ---------------------------------------------------------------------------
 HOLDINGS = [
-    {"name": "Türk Hava Yolları",    "ticker": "THYAO", "yahoo": "THYAO.IS", "sector": "Transport",  "stake_pct": 49.12, "shares": 1373660993, "acq_date": "2017-02-06", "acq_method": "Privatization Admin transfer"},
-    {"name": "Halkbank",              "ticker": "HALKB", "yahoo": "HALKB.IS", "sector": "Banking",    "stake_pct": 40.40, "shares": 7184778041, "acq_date": "2023-03-28", "acq_method": "Treasury decree transfer"},
-    {"name": "VakıfBank",             "ticker": "VAKBN", "yahoo": "VAKBN.IS", "sector": "Banking",    "stake_pct": 74.80, "shares": 9915921523, "acq_date": "2023-03-28", "acq_method": "Treasury transfer + cap injection"},
-    {"name": "Türk Telekom",          "ticker": "TTKOM", "yahoo": "TTKOM.IS", "sector": "Telecom",    "stake_pct": 55.00, "shares": 3500000000, "acq_date": "2022-03-31", "acq_method": "Transfer + $1.65B acquisition"},
-    {"name": "Turkcell",              "ticker": "TCELL", "yahoo": "TCELL.IS", "sector": "Telecom",    "stake_pct": 26.20, "shares": 2178536499, "acq_date": "2020-10-22", "acq_method": "Market acquisition ($1.8B)"},
-    {"name": "Kardemir",              "ticker": "KRDMD", "yahoo": "KRDMD.IS", "sector": "Steel",      "stake_pct": 4.41,  "shares": 780226002,  "acq_date": "2022-12-06", "acq_method": "Market purchase ($35.2M)"},
-    {"name": "Türkiye Sigorta",       "ticker": "TURSG", "yahoo": "TURSG.IS", "sector": "Insurance",  "stake_pct": 81.00, "shares": 10000000000,"acq_date": "2020-04-24", "acq_method": "Merger of state insurers"},
-    {"name": "Türk Altın İşletmeleri","ticker": "TRALT", "yahoo": "TRALT.IS", "sector": "Gold Mining","stake_pct": 100.00,"shares": 3202500000, "acq_date": "2024-10-18", "acq_method": "Seized (ex-KOZAL)"},
-    {"name": "TR Metal Madencilik",   "ticker": "TRMET", "yahoo": "TRMET.IS", "sector": "Mining",     "stake_pct": 100.00,"shares": 388080000,  "acq_date": "2024-10-18", "acq_method": "Seized (ex-KOZAA)"},
-    {"name": "TR Doğal Enerji",       "ticker": "TRENJ", "yahoo": "TRENJ.IS", "sector": "Energy",     "stake_pct": 100.00,"shares": 259785561,  "acq_date": "2024-10-20", "acq_method": "Seized (ex-IPEKE)"},
-]
-
-BENCHMARK_TICKERS = [
-    {"ticker": "XU100",  "yahoo": "XU100.IS"},
-    {"ticker": "USDTRY", "yahoo": "USDTRY=X"},
+    {"name": "Türk Hava Yolları",    "ticker": "THYAO", "sector": "Transport",  "stake_pct": 49.12, "shares": 1373660993, "acq_date": "2017-02-06", "acq_method": "Privatization Admin transfer"},
+    {"name": "Halkbank",              "ticker": "HALKB", "sector": "Banking",    "stake_pct": 40.40, "shares": 7184778041, "acq_date": "2023-03-28", "acq_method": "Treasury decree transfer"},
+    {"name": "VakıfBank",             "ticker": "VAKBN", "sector": "Banking",    "stake_pct": 74.80, "shares": 9915921523, "acq_date": "2023-03-28", "acq_method": "Treasury transfer + cap injection"},
+    {"name": "Türk Telekom",          "ticker": "TTKOM", "sector": "Telecom",    "stake_pct": 55.00, "shares": 3500000000, "acq_date": "2022-03-31", "acq_method": "Transfer + $1.65B acquisition"},
+    {"name": "Turkcell",              "ticker": "TCELL", "sector": "Telecom",    "stake_pct": 26.20, "shares": 2178536499, "acq_date": "2020-10-22", "acq_method": "Market acquisition ($1.8B)"},
+    {"name": "Kardemir",              "ticker": "KRDMD", "sector": "Steel",      "stake_pct": 4.41,  "shares": 780226002,  "acq_date": "2022-12-06", "acq_method": "Market purchase ($35.2M)"},
+    {"name": "Türkiye Sigorta",       "ticker": "TURSG", "sector": "Insurance",  "stake_pct": 81.00, "shares": 10000000000,"acq_date": "2020-04-24", "acq_method": "Merger of state insurers"},
+    {"name": "Türk Altın İşletmeleri","ticker": "TRALT", "sector": "Gold Mining","stake_pct": 100.00,"shares": 3202500000, "acq_date": "2024-10-18", "acq_method": "Seized (ex-KOZAL)"},
+    {"name": "TR Metal Madencilik",   "ticker": "TRMET", "sector": "Mining",     "stake_pct": 100.00,"shares": 388080000,  "acq_date": "2024-10-18", "acq_method": "Seized (ex-KOZAA)"},
+    {"name": "TR Doğal Enerji",       "ticker": "TRENJ", "sector": "Energy",     "stake_pct": 100.00,"shares": 259785561,  "acq_date": "2024-10-20", "acq_method": "Seized (ex-IPEKE)"},
 ]
 
 RF_RATES: dict[str, float] = {
@@ -113,12 +108,20 @@ def _timeframe_start(tf: str, today: datetime) -> datetime:
     raise ValueError(f"Unknown timeframe: {tf}")
 
 
-def _safe_get(info: dict, *keys, default=None):
-    """Try multiple keys from a yfinance info dict, return first non-None."""
+def _safe_get(info, *keys, default=None):
+    """Try multiple keys from an info dict/object, return first non-None."""
     for k in keys:
-        v = info.get(k)
-        if v is not None:
-            return v
+        try:
+            v = info[k]
+            if v is not None:
+                return v
+        except Exception:
+            continue
+    if isinstance(info, dict):
+        for k in keys:
+            v = info.get(k)
+            if v is not None:
+                return v
     return default
 
 
@@ -126,28 +129,43 @@ def _safe_get(info: dict, *keys, default=None):
 # Data fetching
 # ---------------------------------------------------------------------------
 
+def _extract_close_series(hist: pd.DataFrame, label: str) -> pd.Series:
+    """Extract Close series from a borsapy history DataFrame."""
+    if hist is None or hist.empty:
+        log.warning("  %s: empty history", label)
+        return pd.Series(dtype=float)
+    close = hist["Close"].dropna()
+    # Ensure tz-naive index
+    if hasattr(close.index, "tz") and close.index.tz is not None:
+        close.index = close.index.tz_localize(None)
+    log.info("  %s: %d days of history (%s → %s)",
+             label, len(close),
+             close.index[0].strftime("%Y-%m-%d"),
+             close.index[-1].strftime("%Y-%m-%d"))
+    return close
+
+
 def fetch_all_data() -> tuple[dict[str, dict], dict[str, pd.Series]]:
     """
-    Fetch quote info and 5Y daily history for every ticker.
+    Fetch quote info and 5Y daily history for every ticker using borsapy.
 
     Returns:
-        info_map:    {ticker: yf.Ticker.info dict}
+        info_map:    {ticker: info dict/object}
         history_map: {ticker: pd.Series of adjusted close, DatetimeIndex}
     """
-    all_tickers = [h["yahoo"] for h in HOLDINGS] + [b["yahoo"] for b in BENCHMARK_TICKERS]
-    ticker_labels = [h["ticker"] for h in HOLDINGS] + [b["ticker"] for b in BENCHMARK_TICKERS]
-
     info_map: dict[str, dict] = {}
     history_map: dict[str, pd.Series] = {}
 
-    for label, yahoo in zip(ticker_labels, all_tickers):
-        log.info("Fetching %s (%s) ...", label, yahoo)
-        t = yf.Ticker(yahoo)
+    # --- Holdings (bp.Ticker) ---
+    for h in HOLDINGS:
+        label = h["ticker"]
+        log.info("Fetching %s ...", label)
+        t = bp.Ticker(label)
 
-        # Quote info
+        # Quote info — convert to plain dict to avoid repeated lazy-load network calls
         try:
-            info = _retry_fetch(lambda _t=t: _t.info)
-            info_map[label] = info if isinstance(info, dict) else {}
+            info_obj = _retry_fetch(lambda _t=t: _t.info)
+            info_map[label] = info_obj.todict() if hasattr(info_obj, "todict") else dict(info_obj)
         except Exception:
             log.warning("Could not fetch info for %s — using empty dict", label)
             info_map[label] = {}
@@ -155,20 +173,42 @@ def fetch_all_data() -> tuple[dict[str, dict], dict[str, pd.Series]]:
         # Historical prices (5 years)
         try:
             hist = _retry_fetch(lambda _t=t: _t.history(period="5y"))
-            if hist is not None and not hist.empty:
-                close = hist["Close"].dropna()
-                close.index = close.index.tz_localize(None)
-                history_map[label] = close
-                log.info("  %s: %d days of history (%s → %s)",
-                         label, len(close),
-                         close.index[0].strftime("%Y-%m-%d"),
-                         close.index[-1].strftime("%Y-%m-%d"))
-            else:
-                log.warning("  %s: empty history", label)
-                history_map[label] = pd.Series(dtype=float)
+            history_map[label] = _extract_close_series(hist, label)
         except Exception:
             log.warning("  %s: history fetch failed — empty series", label)
             history_map[label] = pd.Series(dtype=float)
+
+    # --- XU100 (bp.Index) ---
+    log.info("Fetching XU100 ...")
+    try:
+        xu100 = bp.Index("XU100")
+        xu100_info = _retry_fetch(lambda: xu100.info)
+        info_map["XU100"] = xu100_info.todict() if hasattr(xu100_info, "todict") else (dict(xu100_info) if xu100_info else {})
+    except Exception:
+        log.warning("Could not fetch info for XU100 — using empty dict")
+        info_map["XU100"] = {}
+    try:
+        hist = _retry_fetch(lambda: xu100.history(period="5y"))
+        history_map["XU100"] = _extract_close_series(hist, "XU100")
+    except Exception:
+        log.warning("  XU100: history fetch failed — empty series")
+        history_map["XU100"] = pd.Series(dtype=float)
+
+    # --- USDTRY (bp.FX) ---
+    log.info("Fetching USDTRY ...")
+    try:
+        fx = bp.FX("USD")
+        fx_current = _retry_fetch(lambda: fx.current)
+        info_map["USDTRY"] = fx_current if isinstance(fx_current, dict) else {"last": fx_current}
+    except Exception:
+        log.warning("Could not fetch FX info for USDTRY — using empty dict")
+        info_map["USDTRY"] = {}
+    try:
+        hist = _retry_fetch(lambda: fx.history(period="5y"))
+        history_map["USDTRY"] = _extract_close_series(hist, "USDTRY")
+    except Exception:
+        log.warning("  USDTRY: history fetch failed — empty series")
+        history_map["USDTRY"] = pd.Series(dtype=float)
 
     return info_map, history_map
 
@@ -326,7 +366,7 @@ def build_investments_csv(
     values_try = []
     for h in HOLDINGS:
         info = info_map.get(h["ticker"], {})
-        price = _safe_get(info, "currentPrice", "regularMarketPrice", default=0.0)
+        price = _safe_get(info, "last", "currentPrice", "regularMarketPrice", default=0.0)
         val_try = h["shares"] * price * (h["stake_pct"] / 100.0)
         values_try.append(val_try)
         total_value_try += val_try
@@ -334,8 +374,8 @@ def build_investments_csv(
     # Second pass: build rows
     for h, val_try in zip(HOLDINGS, values_try):
         info = info_map.get(h["ticker"], {})
-        price = _safe_get(info, "currentPrice", "regularMarketPrice", default=0.0)
-        prev_close = _safe_get(info, "previousClose", default=0.0)
+        price = _safe_get(info, "last", "currentPrice", "regularMarketPrice", default=0.0)
+        prev_close = _safe_get(info, "close", "previousClose", default=0.0)
         daily_chg = (price - prev_close) / prev_close if prev_close else None
 
         rows.append({
@@ -497,8 +537,8 @@ def build_portfolio_meta(
     total_try = investments_df["ValueTRY"].sum()
 
     xu100_info = info_map.get("XU100", {})
-    xu100_price = _safe_get(xu100_info, "regularMarketPrice", "previousClose", default=None)
-    xu100_prev = _safe_get(xu100_info, "previousClose", default=None)
+    xu100_price = _safe_get(xu100_info, "last", "regularMarketPrice", "close", default=None)
+    xu100_prev = _safe_get(xu100_info, "close", "previousClose", default=None)
     xu100_chg = None
     if xu100_price and xu100_prev and xu100_prev > 0:
         xu100_chg = round((xu100_price - xu100_prev) / xu100_prev, 6)
@@ -603,13 +643,13 @@ def main() -> None:
 
     # 1) Fetch all data
     log.info("=" * 60)
-    log.info("PHASE 1: Fetching data from Yahoo Finance")
+    log.info("PHASE 1: Fetching data from borsapy (TradingView/İş Yatırım)")
     log.info("=" * 60)
     info_map, history_map = fetch_all_data()
 
     # Current USDTRY rate
     usdtry_info = info_map.get("USDTRY", {})
-    usdtry_rate = _safe_get(usdtry_info, "regularMarketPrice", "previousClose", default=None)
+    usdtry_rate = _safe_get(usdtry_info, "last", "regularMarketPrice", "close", default=None)
     if usdtry_rate is None and not history_map.get("USDTRY", pd.Series(dtype=float)).empty:
         usdtry_rate = float(history_map["USDTRY"].iloc[-1])
     if usdtry_rate is None:
