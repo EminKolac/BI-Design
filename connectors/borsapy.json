@@ -1,0 +1,68 @@
+{
+  "connectorType": "Python (borsapy)",
+  "description": "BIST market data connector using borsapy — downloads Turkish stock, index, and FX data from TradingView / İş Yatırım",
+  "repository": "https://pypi.org/project/borsapy/",
+  "package": "borsapy>=0.8.0",
+  "dataSources": [
+    {
+      "name": "stock-history",
+      "description": "Historical OHLCV price data for BIST-listed equities",
+      "method": "bp.Ticker(symbol).history(period='5y')",
+      "parameters": {
+        "tickers": "${TICKER_SYMBOLS}",
+        "period": "5y",
+        "interval": "1d"
+      },
+      "columns": [
+        { "name": "Date", "type": "DateTime" },
+        { "name": "Open", "type": "Decimal" },
+        { "name": "High", "type": "Decimal" },
+        { "name": "Low", "type": "Decimal" },
+        { "name": "Close", "type": "Decimal" },
+        { "name": "Volume", "type": "Int64" }
+      ]
+    },
+    {
+      "name": "company-info",
+      "description": "Current quote info and metadata via bp.Ticker.info",
+      "method": "bp.Ticker(symbol).info",
+      "columns": [
+        { "name": "Symbol", "type": "String" },
+        { "name": "last", "type": "Decimal" },
+        { "name": "close", "type": "Decimal" },
+        { "name": "marketCap", "type": "Int64" },
+        { "name": "trailingPE", "type": "Decimal" },
+        { "name": "priceToBook", "type": "Decimal" },
+        { "name": "dividendYield", "type": "Decimal" },
+        { "name": "fiftyTwoWeekHigh", "type": "Decimal" },
+        { "name": "fiftyTwoWeekLow", "type": "Decimal" },
+        { "name": "volume", "type": "Int64" }
+      ]
+    },
+    {
+      "name": "index",
+      "description": "BIST XU100 index data via bp.Index",
+      "method": "bp.Index('XU100').history(period='5y')",
+      "columns": [
+        { "name": "Date", "type": "DateTime" },
+        { "name": "Close", "type": "Decimal" },
+        { "name": "Volume", "type": "Int64" }
+      ]
+    },
+    {
+      "name": "fx-rate",
+      "description": "USD/TRY exchange rate via bp.FX",
+      "method": "bp.FX('USD').history(period='5y')",
+      "columns": [
+        { "name": "Date", "type": "DateTime" },
+        { "name": "Close", "type": "Decimal" }
+      ]
+    }
+  ],
+  "refreshSchedule": {
+    "frequency": "Daily",
+    "time": "18:30",
+    "timezone": "Europe/Istanbul",
+    "note": "Run after BIST close (6:00 PM TRT)"
+  }
+}
