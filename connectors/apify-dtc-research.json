@@ -1,0 +1,264 @@
+{
+  "name": "Apify DTC Brand Research",
+  "description": "Single API key for 10 scrapers used by DTC brand research agent teams (Gretta, Arie, Alex, Davie)",
+  "baseUrl": "https://api.apify.com/v2",
+  "mcpServer": "https://mcp.apify.com",
+  "auth": {
+    "type": "bearer",
+    "headerKey": "Authorization",
+    "queryParam": "token",
+    "envVar": "APIFY_TOKEN"
+  },
+  "rateLimits": {
+    "requestsPerSecond": 60,
+    "maxActorRam": "8 GB (free plan)",
+    "syncTimeout": "5 minutes"
+  },
+  "actors": [
+    {
+      "id": "apify/instagram-profile-scraper",
+      "name": "Instagram Profile Scraper",
+      "cost": "$2.30–2.60/1K results",
+      "usedBy": ["Gretta"],
+      "mode": "sync",
+      "purpose": "Follower count, bio, engagement, website, contact info for brand profiles",
+      "input": {
+        "usernames": ["brandname1", "brandname2"],
+        "resultsLimit": 50
+      },
+      "outputFields": [
+        "username", "fullName", "biography", "followersCount", "followsCount",
+        "postsCount", "isVerified", "isBusinessAccount", "businessCategoryName",
+        "externalUrl", "profilePicUrl", "igtvVideoCount", "relatedProfiles"
+      ]
+    },
+    {
+      "id": "apify/instagram-post-scraper",
+      "name": "Instagram Post Scraper",
+      "cost": "$2.30–2.70/1K results",
+      "usedBy": ["Gretta"],
+      "mode": "sync",
+      "purpose": "Post captions, likes, comments, hashtags, engagement metrics",
+      "input": {
+        "username": ["brandname"],
+        "resultsLimit": 30
+      },
+      "outputFields": [
+        "id", "shortCode", "caption", "likesCount", "commentsCount",
+        "timestamp", "hashtags", "mentions", "url", "isSponsored",
+        "coauthorProducers", "videoViewCount", "videoPlayCount", "images"
+      ]
+    },
+    {
+      "id": "apify/instagram-hashtag-scraper",
+      "name": "Instagram Hashtag Scraper",
+      "cost": "$2.30–2.60/1K results",
+      "usedBy": ["Gretta"],
+      "mode": "sync",
+      "purpose": "Discover brands via hashtag — find who's posting under #cleanbeauty, #dtcbrand etc.",
+      "input": {
+        "hashtags": ["cleanbeauty", "dtcbrand", "shopifystore"],
+        "resultsLimit": 50
+      },
+      "outputFields": [
+        "id", "shortCode", "caption", "likesCount", "commentsCount",
+        "ownerUsername", "ownerFullName", "hashtags", "url", "timestamp", "isSponsored"
+      ]
+    },
+    {
+      "id": "apify/instagram-reel-scraper",
+      "name": "Instagram Reel Scraper",
+      "cost": "$2.30–2.60/1K results",
+      "usedBy": ["Gretta", "Arie"],
+      "mode": "sync",
+      "purpose": "Reel views, shares, plays — find brands with viral short-form content",
+      "input": {
+        "usernames": ["brandname"],
+        "resultsLimit": 20
+      },
+      "outputFields": [
+        "id", "shortCode", "caption", "likesCount", "commentsCount",
+        "videoViewCount", "videoPlayCount", "shareCount", "timestamp",
+        "musicInfo", "isPinned"
+      ]
+    },
+    {
+      "id": "clockworks/free-tiktok-scraper",
+      "name": "TikTok Scraper",
+      "cost": "~$2–3/1K results",
+      "usedBy": ["Arie"],
+      "mode": "sync",
+      "alternativeActor": "apidojo/tiktok-scraper",
+      "purpose": "TikTok videos, engagement, hashtags, sounds for brand/product discovery",
+      "input": {
+        "profiles": ["brandname"],
+        "resultsPerPage": 20,
+        "shouldDownloadVideos": false
+      },
+      "outputFields": [
+        "id", "text", "createTime",
+        "authorMeta (name, fans, following, heart)",
+        "videoMeta (duration, coverUrl)",
+        "diggCount", "shareCount", "playCount", "commentCount",
+        "hashtags", "musicMeta"
+      ]
+    },
+    {
+      "id": "curious_coder/similarweb-scraper",
+      "name": "SimilarWeb Scraper",
+      "cost": "~$0.50–2.00/domain",
+      "usedBy": ["Alex"],
+      "mode": "async",
+      "purpose": "Monthly visits, traffic sources, geo breakdown, bounce rate",
+      "note": "Most expensive actor. Use web_fetch for initial filtering, then scrape top 10 only.",
+      "alternativeActors": [
+        "ecomdate/similarweb-scraper",
+        "consummate_mandala/similarweb-traffic-scraper"
+      ],
+      "input": {
+        "urls": [
+          "https://www.similarweb.com/website/oakcha.com/",
+          "https://www.similarweb.com/website/beautyofjoseon.com/"
+        ]
+      },
+      "outputFields": [
+        "domain", "globalRank", "countryRank", "totalVisits", "bounceRate",
+        "pagesPerVisit", "avgVisitDuration",
+        "trafficSources (direct, referrals, search, social, mail, display)",
+        "topCountries", "topReferrals", "topKeywords", "similarSites", "categoryRank"
+      ]
+    },
+    {
+      "id": "apify/facebook-ads-scraper",
+      "name": "Facebook/Meta Ad Library Scraper",
+      "cost": "~$0.75–1.50/1K ads",
+      "usedBy": ["Alex", "Davie"],
+      "mode": "async",
+      "alternativeActor": "curious_coder/facebook-ads-library-scraper",
+      "purpose": "All active ads for a brand — ad count, creatives, copy, CTA, platforms",
+      "input": {
+        "urls": [
+          "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=US&q=oakcha"
+        ],
+        "maxItems": 100
+      },
+      "outputFields": [
+        "adId", "pageId", "pageName", "adText", "adCTA", "adImage", "adVideo",
+        "adLink", "platforms", "startedRunningOn", "status", "impressions",
+        "spendRange", "reachEstimate"
+      ]
+    },
+    {
+      "id": "dtrungtin/shopify-scraper",
+      "name": "Shopify Store/Product Scraper",
+      "cost": "~$1–2/1K products",
+      "usedBy": ["Davie", "Alex"],
+      "mode": "async",
+      "purpose": "Scrape any Shopify store's products, prices, variants, collections",
+      "input": {
+        "startUrls": [
+          { "url": "https://oakcha.com" }
+        ],
+        "maxItems": 100
+      },
+      "outputFields": [
+        "title", "handle", "productType", "vendor", "price", "compareAtPrice",
+        "variants (size, color, price, available)", "images", "tags",
+        "description", "createdAt", "updatedAt", "url"
+      ]
+    },
+    {
+      "id": "tri_angle/crunchbase-scraper",
+      "name": "Crunchbase Scraper",
+      "cost": "~$1–3/1K results",
+      "usedBy": ["Alex"],
+      "mode": "async",
+      "purpose": "Funding rounds, investors, company overview — VC-backed brand identification",
+      "input": {
+        "urls": [
+          "https://www.crunchbase.com/organization/oakcha"
+        ]
+      },
+      "outputFields": [
+        "name", "shortDescription", "foundedOn", "totalFundingAmount",
+        "lastFundingType", "lastFundingDate", "numberOfEmployees",
+        "headquarters", "categories", "investors", "fundingRounds"
+      ]
+    },
+    {
+      "id": "emastra/google-trends-scraper",
+      "name": "Google Trends Scraper",
+      "cost": "~$0.10/query",
+      "usedBy": ["Arie", "Davie"],
+      "mode": "sync",
+      "purpose": "Search interest trends over time — validate if a product category is growing",
+      "input": {
+        "searchTerms": ["clean beauty", "pet supplements", "weighted blanket"],
+        "timeRange": "past12Months",
+        "geo": "US"
+      },
+      "outputFields": [
+        "term", "timelineData [{date, value}]", "averageValue",
+        "relatedQueries", "risingQueries", "geo"
+      ]
+    }
+  ],
+  "freeMethodsNoApify": {
+    "builtWithAlternative": {
+      "description": "Detect Shopify and tech stack from HTTP headers and page source",
+      "commands": [
+        "curl -sI https://brandname.com | grep -i 'shopify|x-shopify'",
+        "curl -s https://brandname.com | grep -oi 'klaviyo|recharge|yotpo|triple.whale|postscript|gorgias|attentive|loox|stamped|okendo|rebuy'"
+      ]
+    },
+    "linkedinEmployeeCount": {
+      "description": "Estimate revenue from LinkedIn employee count",
+      "method": "web_search 'site:linkedin.com/company brandname'",
+      "mapping": {
+        "1-5 employees": "<$1M",
+        "5-15 employees": "$1-5M",
+        "15-50 employees": "$5-25M",
+        "50+ employees": "$25M+"
+      }
+    },
+    "tiktokCreativeCenter": {
+      "description": "Public top ads data from TikTok",
+      "url": "https://ads.tiktok.com/business/creativecenter/inspiration/topads/pad/en"
+    },
+    "turkeyAvailabilityCheck": {
+      "description": "Check if brand already sells in Turkey",
+      "searches": [
+        "web_search '[brandname] site:trendyol.com'",
+        "web_search '[brandname] site:hepsiburada.com'",
+        "web_search '[brandname] site:amazon.com.tr'"
+      ]
+    }
+  },
+  "costEstimate": {
+    "typicalSession": "30-brand discovery",
+    "breakdown": {
+      "30 IG profiles": "$0.07",
+      "300 IG posts (30×10)": "$0.69",
+      "5 hashtag scans": "$0.58",
+      "20 TikTok profiles": "$0.05",
+      "30 SimilarWeb lookups": "$30.00",
+      "30 Meta Ad searches": "$2.25",
+      "15 Shopify store scrapes": "$1.13",
+      "total": "$5–35 depending on SimilarWeb depth"
+    },
+    "costSavingTip": "Use SimilarWeb free website analyzer (web_fetch) for initial filtering, then only Apify-scrape top 10 candidates. Drops total to ~$5-8 per session."
+  },
+  "apiPatterns": {
+    "syncRun": "POST /v2/acts/{ACTOR_ID}/run-sync-get-dataset-items?token={TOKEN}",
+    "asyncRunStart": "POST /v2/acts/{ACTOR_ID}/runs?token={TOKEN}",
+    "asyncRunStatus": "GET /v2/actor-runs/{RUN_ID}?token={TOKEN}",
+    "asyncRunResults": "GET /v2/datasets/{DATASET_ID}/items?token={TOKEN}"
+  },
+  "references": {
+    "docs": "https://docs.apify.com/api/v2",
+    "actorStore": "https://apify.com/store",
+    "pythonSdk": "https://docs.apify.com/sdk/python",
+    "nodeSdk": "https://docs.apify.com/sdk/js",
+    "mcpSetup": "https://docs.apify.com/platform/integrations/mcp"
+  }
+}
