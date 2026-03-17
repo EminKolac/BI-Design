@@ -16,22 +16,24 @@
     "format": "prettier --write \"src/**/*.ts\" \"scripts/**/*.ts\" \"themes/**/*.json\""
   },
   "dependencies": {
-    "powerbi-client": "^2.23.1",
-    "powerbi-models": "^1.13.0",
-    "powerbi-report-authoring": "^3.0.0",
     "@azure/identity": "^4.2.0",
     "@azure/msal-node": "^2.9.0",
+    "ajv": "^8.16.0",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
-    "ajv": "^8.16.0"
+    "powerbi-client": "^2.23.1",
+    "powerbi-models": "^1.13.0",
+    "powerbi-report-authoring": "^3.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@figma/rest-api-spec": "^0.18.0",
     "@types/node": "^20.14.0",
     "eslint": "^9.5.0",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^8.57.1"
   },
   "keywords": [
     "powerbi",
