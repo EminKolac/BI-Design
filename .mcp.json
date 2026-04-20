@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "apify-yahoo-finance": {
+      "type": "http",
+      "url": "https://apify.com/canadesk/yahoo-finance/api/mcp",
+      "description": "Apify Actor: canadesk/yahoo-finance. Scrapes Yahoo Finance quote, balance sheet, income statement, key statistics.",
+      "headers": {
+        "Authorization": "Bearer ${APIFY_TOKEN}"
+      },
+      "env": {
+        "APIFY_TOKEN": "${APIFY_TOKEN}"
+      }
+    }
+  }
+}

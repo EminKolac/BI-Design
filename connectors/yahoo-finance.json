@@ -1,14 +1,27 @@
 {
   "connectorType": "Yahoo Finance",
   "description": "Yahoo Finance data source for equity fundamentals, balance-sheet items and risk metrics. Used to audit Bigdata.com values and to fill gaps for tickers not covered by Bigdata (e.g. ANGL.ST, WVIA.L).",
-  "package": {
-    "name": "yahoo-finance2",
-    "version": "^2.13.3"
-  },
-  "connection": {
-    "provider": "yahoo-finance2",
-    "authenticationMode": "None",
-    "notes": "yahoo-finance2 scrapes Yahoo Finance public endpoints; no API key required but a User-Agent may be needed. Respect rate limits (<=1 req/sec recommended)."
+  "providers": {
+    "primary": {
+      "name": "apify-canadesk-yahoo-finance",
+      "type": "apify-actor",
+      "actor": "canadesk/yahoo-finance",
+      "mcpUrl": "https://apify.com/canadesk/yahoo-finance/api/mcp",
+      "restUrl": "https://api.apify.com/v2/acts/canadesk~yahoo-finance/run-sync-get-dataset-items",
+      "auth": {
+        "mode": "BearerToken",
+        "envVar": "APIFY_TOKEN"
+      },
+      "notes": "Apify actor scrapes Yahoo Finance via paid infrastructure; handles cookies/crumbs/rate limits. Preferred when running in CI or sandboxed environments."
+    },
+    "fallback": {
+      "name": "yahoo-finance2",
+      "type": "npm-package",
+      "package": "yahoo-finance2",
+      "version": "^3.14.0",
+      "auth": { "mode": "None" },
+      "notes": "Direct scraper; may hit cookie/crumb issues in restricted networks. Fine for local dev."
+    }
   },
   "universe": {
     "label": "Gaming & Lottery comparable companies",

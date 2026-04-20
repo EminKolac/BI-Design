@@ -130,7 +130,19 @@ connector config lists each Bloomberg ticker from the gaming/lottery peer set
 with its Yahoo equivalent, country, and any corporate-action notes (rebrands,
 delistings, acquisitions).
 
+### Providers
+
+- **Primary — Apify actor `canadesk/yahoo-finance`** (set `APIFY_TOKEN`).
+  Handles cookies/crumbs/rate limits; also exposed as an MCP server via
+  `.mcp.json` (`https://apify.com/canadesk/yahoo-finance/api/mcp`).
+- **Fallback — `yahoo-finance2` npm package.** Direct scraper; OK for local
+  dev, can fail in sandboxed networks without cookie support.
+
+The TS script auto-selects: Apify if `APIFY_TOKEN` is set, otherwise the npm
+package.
+
 ```bash
+export APIFY_TOKEN=apify_api_xxx   # optional
 npm run fetch-yahoo
 ```
 

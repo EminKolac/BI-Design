@@ -1,8 +1,16 @@
 import * as fs from "fs";
 import * as path from "path";
+import axios from "axios";
 import YahooFinance from "yahoo-finance2";
 
 const yahooFinance = new YahooFinance();
+
+// Provider selection:
+//   APIFY_TOKEN set  -> call canadesk/yahoo-finance actor (robust, handles cookies)
+//   otherwise        -> yahoo-finance2 npm lib (may fail in restricted networks)
+const APIFY_TOKEN = process.env.APIFY_TOKEN;
+const APIFY_ACTOR = "canadesk~yahoo-finance";
+const APIFY_RUN_URL = `https://api.apify.com/v2/acts/${APIFY_ACTOR}/run-sync-get-dataset-items`;
 
 interface TickerEntry {
   bbgTicker: string;
@@ -53,6 +61,44 @@ function unlever(rawBeta: number | undefined, de: number | undefined, t: number)
   return rawBeta / (1 + (1 - t) * de);
 }
 
+async function fetchViaApify(symbol: string): Promise<any> {
+  // Apify canadesk/yahoo-finance actor input shape (see actor README).
+  const input = {
+    symbols: [symbol],
+    modules: [
+      "price",
+      "summaryDetail",
+      "defaultKeyStatistics",
+      "financialData",
+      "balanceSheetHistory",
+    ],
+  };
+  const res = await axios.post(APIFY_RUN_URL, input, {
+    params: { token: APIFY_TOKEN, timeout: 60 },
+    timeout: 90_000,
+  });
+  const items = Array.isArray(res.data) ? res.data : [];
+  if (!items.length) throw new Error("Apify actor returned no items");
+  // Actor typically returns a flat object per symbol or a nested quoteSummary.
+  const first = items[0];
+  return first.quoteSummary ?? first;
+}
+
+async function fetchQuoteSummary(symbol: string): Promise<any> {
+  if (APIFY_TOKEN) {
+    return fetchViaApify(symbol);
+  }
+  return yahooFinance.quoteSummary(symbol, {
+    modules: [
+      "price",
+      "summaryDetail",
+      "defaultKeyStatistics",
+      "financialData",
+      "balanceSheetHistory",
+    ],
+  });
+}
+
 async function fetchOne(entry: TickerEntry): Promise<FetchResult> {
   const base: FetchResult = {
     bbgTicker: entry.bbgTicker,
@@ -68,15 +114,7 @@ async function fetchOne(entry: TickerEntry): Promise<FetchResult> {
   }
 
   try {
-    const qs = (await yahooFinance.quoteSummary(entry.yahoo, {
-      modules: [
-        "price",
-        "summaryDetail",
-        "defaultKeyStatistics",
-        "financialData",
-        "balanceSheetHistory",
-      ],
-    })) as any;
+    const qs = (await fetchQuoteSummary(entry.yahoo)) as any;
 
     const bs = qs.balanceSheetHistory?.balanceSheetStatements?.[0];
     const totalDebt =
@@ -156,6 +194,10 @@ function printTable(results: FetchResult[]): void {
 async function main(): Promise<void> {
   const configPath = path.join(__dirname, "..", "connectors", "yahoo-finance.json");
   const config: ConnectorConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+
+  console.log(
+    `Provider: ${APIFY_TOKEN ? "apify (canadesk/yahoo-finance)" : "yahoo-finance2 (direct)"}`
+  );
 
   // Silence the deprecated-survey notice (available in v3).
   (yahooFinance as any).suppressNotices?.(["yahooSurvey"]);

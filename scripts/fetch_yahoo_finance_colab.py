@@ -14,14 +14,22 @@ Cikti:
 # ============================================================
 # 1) Kurulum (Colab icin)
 # ============================================================
-# !pip install -q yfinance pandas
+# !pip install -q yfinance pandas requests
+# import os; os.environ["APIFY_TOKEN"] = "apify_api_xxx"   # opsiyonel
 
 import json
+import os
 import time
 from datetime import datetime, timezone
 
 import pandas as pd
+import requests
 import yfinance as yf
+
+# Apify actor fallback (robust in restricted networks).
+# Colab: os.environ["APIFY_TOKEN"] = "apify_api_xxx"  before run()
+APIFY_TOKEN = os.environ.get("APIFY_TOKEN")
+APIFY_URL = "https://api.apify.com/v2/acts/canadesk~yahoo-finance/run-sync-get-dataset-items"
 
 
 # ============================================================
@@ -78,6 +86,45 @@ def first_col_value(df, candidates):
     return None
 
 
+def fetch_via_apify(symbol):
+    """canadesk/yahoo-finance Apify actor'u cagirir; dict doner."""
+    r = requests.post(
+        APIFY_URL,
+        params={"token": APIFY_TOKEN, "timeout": 60},
+        json={
+            "symbols": [symbol],
+            "modules": [
+                "price", "summaryDetail", "defaultKeyStatistics",
+                "financialData", "balanceSheetHistory",
+            ],
+        },
+        timeout=90,
+    )
+    r.raise_for_status()
+    items = r.json()
+    if not items:
+        raise RuntimeError("Apify actor returned no items")
+    first = items[0]
+    return first.get("quoteSummary", first)
+
+
+def _apify_field(qs, *paths):
+    """Apify quoteSummary icinde dotted-path degeri bul."""
+    for p in paths:
+        cur = qs
+        for k in p.split("."):
+            if isinstance(cur, dict) and k in cur:
+                cur = cur[k]
+            else:
+                cur = None
+                break
+        if cur is not None:
+            if isinstance(cur, dict) and "raw" in cur:
+                return cur["raw"]
+            return cur
+    return None
+
+
 def fetch_one(entry):
     row = {
         "bbg_ticker": entry["bbg"],
@@ -104,25 +151,40 @@ def fetch_one(entry):
         return row
 
     try:
-        t = yf.Ticker(entry["yahoo"])
-        info = t.info or {}
-        bs = t.balance_sheet  # quarterly_balance_sheet da var
+        if APIFY_TOKEN:
+            qs = fetch_via_apify(entry["yahoo"])
+            row["currency"]   = _apify_field(qs, "price.currency")
+            row["price"]      = _apify_field(qs, "price.regularMarketPrice")
+            row["market_cap"] = _apify_field(qs, "price.marketCap")
+            row["raw_beta"]   = _apify_field(qs, "defaultKeyStatistics.beta", "summaryDetail.beta")
+            total_debt = _apify_field(qs, "financialData.totalDebt",
+                                      "balanceSheetHistory.balanceSheetStatements.0.longTermDebt",
+                                      "balanceSheetHistory.balanceSheetStatements.0.totalLiab")
+            equity     = _apify_field(qs, "balanceSheetHistory.balanceSheetStatements.0.totalStockholderEquity")
+            de_info    = _apify_field(qs, "financialData.debtToEquity")
+            end_date   = _apify_field(qs, "balanceSheetHistory.balanceSheetStatements.0.endDate")
+            if end_date:
+                row["fiscal_date"] = str(end_date)[:10]
+        else:
+            t = yf.Ticker(entry["yahoo"])
+            info = t.info or {}
+            bs = t.balance_sheet  # quarterly_balance_sheet da var
 
-        row["currency"]   = info.get("currency") or info.get("financialCurrency")
-        row["price"]      = info.get("currentPrice") or info.get("regularMarketPrice")
-        row["market_cap"] = info.get("marketCap")
-        row["raw_beta"]   = info.get("beta")
+            row["currency"]   = info.get("currency") or info.get("financialCurrency")
+            row["price"]      = info.get("currentPrice") or info.get("regularMarketPrice")
+            row["market_cap"] = info.get("marketCap")
+            row["raw_beta"]   = info.get("beta")
 
-        # info.totalDebt / debtToEquity varsa direkt kullan
-        total_debt = info.get("totalDebt")
-        equity     = info.get("totalStockholderEquity")
-        de_info    = info.get("debtToEquity")  # yuzde olarak gelir
+            total_debt = info.get("totalDebt")
+            equity     = info.get("totalStockholderEquity")
+            de_info    = info.get("debtToEquity")
 
-        # Balance sheet'ten fallback
-        if total_debt is None:
-            total_debt = first_col_value(bs, ["Total Debt", "Long Term Debt", "Total Liabilities Net Minority Interest"])
-        if equity is None:
-            equity = first_col_value(bs, ["Stockholders Equity", "Total Stockholder Equity", "Common Stock Equity"])
+            if total_debt is None:
+                total_debt = first_col_value(bs, ["Total Debt", "Long Term Debt", "Total Liabilities Net Minority Interest"])
+            if equity is None:
+                equity = first_col_value(bs, ["Stockholders Equity", "Total Stockholder Equity", "Common Stock Equity"])
+            if bs is not None and not bs.empty:
+                row["fiscal_date"] = str(bs.columns[0].date())
 
         row["total_debt"] = total_debt
         row["equity"]     = equity
@@ -134,10 +196,6 @@ def fetch_one(entry):
 
         de_decimal = row["de_pct"] / 100 if row["de_pct"] is not None else None
         row["unlevered_beta"] = unlever(row["raw_beta"], de_decimal, row["tax_rate"])
-
-        if bs is not None and not bs.empty:
-            row["fiscal_date"] = str(bs.columns[0].date())
-
         row["status"] = "ok"
     except Exception as e:
         row["status"] = "error"
