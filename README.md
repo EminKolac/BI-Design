@@ -18,7 +18,8 @@ BI-Design/
 │   ├── sql-server.json              # SQL Server connection
 │   ├── rest-api.json                # REST API with pagination
 │   ├── excel-csv.json               # Excel/CSV file sources
-│   └── sharepoint.json              # SharePoint Online lists
+│   ├── sharepoint.json              # SharePoint Online lists
+│   └── yahoo-finance.json           # Yahoo Finance equity fundamentals
 ├── figma/
 │   ├── nbim-design-tokens.json      # NBIM-style design tokens
 │   └── design-tokens.json           # Generic design tokens
@@ -35,7 +36,8 @@ BI-Design/
     ├── deploy.ts                    # Deploy themes & manage reports
     ├── export-figma-tokens.ts       # Export tokens from Figma
     ├── generate-theme.ts            # Generate themes from tokens
-    └── validate-theme.ts            # Validate theme JSON files
+    ├── validate-theme.ts            # Validate theme JSON files
+    └── fetch-yahoo-finance.ts       # Pull equity fundamentals from Yahoo Finance
 ```
 
 ## Quick Start
@@ -119,6 +121,26 @@ FIGMA_FILE_KEY=your-file-key
 npm run export-figma
 npm run generate-theme
 ```
+
+## Yahoo Finance Equity Fundamentals
+
+Used to audit Bigdata.com values and to fill gaps for tickers Bigdata does not
+cover (e.g. Angler Gaming `ANGL.ST`, Winvia Entertainment `WVIA.L`). The
+connector config lists each Bloomberg ticker from the gaming/lottery peer set
+with its Yahoo equivalent, country, and any corporate-action notes (rebrands,
+delistings, acquisitions).
+
+```bash
+npm run fetch-yahoo
+```
+
+The script pulls `quoteSummary` (price, summaryDetail, defaultKeyStatistics,
+financialData, balanceSheetHistory), recomputes unlevered beta with the
+country statutory tax rate, prints a summary table, and writes a JSON snapshot
+to `scripts/data/yahoo-finance-snapshot.json`.
+
+Delisted tickers (`ASPIRE SS`, `NLAB SS`, `LO24 GR`) are flagged `skipped` in
+the snapshot with a recommended replacement peer in the note field.
 
 ## Deploy
 

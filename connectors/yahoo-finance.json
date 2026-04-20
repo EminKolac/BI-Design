@@ -1,0 +1,63 @@
+{
+  "connectorType": "Yahoo Finance",
+  "description": "Yahoo Finance data source for equity fundamentals, balance-sheet items and risk metrics. Used to audit Bigdata.com values and to fill gaps for tickers not covered by Bigdata (e.g. ANGL.ST, WVIA.L).",
+  "package": {
+    "name": "yahoo-finance2",
+    "version": "^2.13.3"
+  },
+  "connection": {
+    "provider": "yahoo-finance2",
+    "authenticationMode": "None",
+    "notes": "yahoo-finance2 scrapes Yahoo Finance public endpoints; no API key required but a User-Agent may be needed. Respect rate limits (<=1 req/sec recommended)."
+  },
+  "universe": {
+    "label": "Gaming & Lottery comparable companies",
+    "tickers": [
+      { "bbgTicker": "INLOT GA Equity",  "yahoo": "BYLOT.AT",  "name": "Bally's Intralot (ex-INTRALOT)", "country": "GREECE",  "note": "Re-branded 2025; former INLOT.AT" },
+      { "bbgTicker": "OPAP GA Equity",   "yahoo": "OPAP.AT",   "name": "OPAP SA",                        "country": "GREECE",  "note": "Allwyn tender offer expected Q2 2026" },
+      { "bbgTicker": "ANGL SS Equity",   "yahoo": "ANGL.ST",   "name": "Angler Gaming PLC",              "country": "MALTA",   "note": "NGM-listed micro-cap; not on Bigdata.com" },
+      { "bbgTicker": "GMBL US Equity",   "yahoo": "GMBL",      "name": "Esports Entertainment Group",    "country": "MALTA",   "note": "Penny stock, negative equity" },
+      { "bbgTicker": "ASPIRE SS Equity", "yahoo": null,        "name": "Aspire Global PLC",              "country": "MALTA",   "note": "Delisted 2022 (NeoGames -> Aristocrat). Use ALL.AX as peer." },
+      { "bbgTicker": "BOTB LN Equity",   "yahoo": "WVIA.L",    "name": "Winvia Entertainment (ex-BOTB)", "country": "BRITAIN", "note": "Relisted Nov 2025 as WVIA" },
+      { "bbgTicker": "NLAB SS Equity",   "yahoo": null,        "name": "Enlabs AB",                      "country": "SWEDEN",  "note": "Delisted 2021 (acquired by Entain). Use ENT.L as peer." },
+      { "bbgTicker": "LO24 GR Equity",   "yahoo": null,        "name": "Lotto24",                        "country": "GERMANY", "note": "Merged into Zeal Network (TIMA.DE); do not double-count." },
+      { "bbgTicker": "TIMA GR Equity",   "yahoo": "TIMA.DE",   "name": "Zeal Network SE",                "country": "GERMANY", "note": "Lotto24 parent" },
+      { "bbgTicker": "BETSB SS Equity",  "yahoo": "BETS-B.ST", "name": "Betsson AB",                     "country": "SWEDEN",  "note": "Reports in EUR despite SEK ticker" },
+      { "bbgTicker": "FLTR ID Equity",   "yahoo": "FLUT",      "name": "Flutter Entertainment",          "country": "IRELAND", "note": "Primary listing moved to NYSE (FLUT) in May 2024" }
+    ]
+  },
+  "endpoints": [
+    {
+      "name": "quote-summary",
+      "module": "yahoo-finance2",
+      "method": "quoteSummary",
+      "modules": [
+        "price",
+        "summaryDetail",
+        "defaultKeyStatistics",
+        "financialData",
+        "balanceSheetHistory",
+        "incomeStatementHistory"
+      ],
+      "responseMapping": {
+        "columns": [
+          { "source": "price.symbol",                                 "name": "Ticker",        "type": "String"  },
+          { "source": "price.longName",                               "name": "Name",          "type": "String"  },
+          { "source": "price.currency",                               "name": "Currency",      "type": "String"  },
+          { "source": "balanceSheetHistory.balanceSheetStatements.0.totalLiab",         "name": "TotalDebt",   "type": "Decimal" },
+          { "source": "balanceSheetHistory.balanceSheetStatements.0.totalStockholderEquity", "name": "Equity", "type": "Decimal" },
+          { "source": "defaultKeyStatistics.beta",                    "name": "RawBeta",       "type": "Decimal" },
+          { "source": "financialData.debtToEquity",                   "name": "DebtToEquity",  "type": "Decimal" }
+        ]
+      }
+    }
+  ],
+  "refreshSchedule": {
+    "frequency": "Daily",
+    "time": "07:00",
+    "timezone": "UTC"
+  },
+  "outputs": [
+    "scripts/data/yahoo-finance-snapshot.json"
+  ]
+}
